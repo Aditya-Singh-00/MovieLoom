@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -66,10 +67,12 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
         }
         desktopMain.dependencies {

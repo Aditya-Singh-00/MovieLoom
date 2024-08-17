@@ -4,7 +4,7 @@ import com.movieloom.app.data.models.Movie
 
 interface AppRepository {
 
-    suspend fun getMovies(): String
+    suspend fun getMovies(): List<Movie>
 
 
 }

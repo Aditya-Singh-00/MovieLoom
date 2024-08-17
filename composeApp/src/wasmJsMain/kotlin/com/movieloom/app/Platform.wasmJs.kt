@@ -8,4 +8,4 @@ class WasmPlatform: Platform {
 
 actual fun getPlatform(): Platform = WasmPlatform()
 
-actual fun getClient(): HttpClient = HttpClient()
+actual fun getClient(): HttpClient = HttpClient(httpClientConfig)

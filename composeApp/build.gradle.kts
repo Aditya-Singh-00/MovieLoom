@@ -74,6 +74,7 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.media.kamel.default)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

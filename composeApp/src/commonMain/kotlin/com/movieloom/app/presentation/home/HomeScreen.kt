@@ -2,9 +2,13 @@ package com.movieloom.app.presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
@@ -13,9 +17,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.movieloom.app.data.Routes
 import com.movieloom.app.data.models.Movie
+import com.movieloom.app.presentation.common.MovieCard
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 
 @Composable
 fun HomeScreen(
@@ -60,24 +67,9 @@ fun HomeScreenSuccess(
     movies: List<Movie>,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    LazyRow(
         modifier = modifier.fillMaxSize()
     ) {
-        items(movies) { MovieListItem(it) }
-    }
-}
-
-@Composable
-fun MovieListItem(
-    movie: Movie,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-    ) {
-        Text(
-            text = movie.title ?: "",
-            modifier = Modifier.padding(8.dp)
-        )
+        items(movies) { MovieCard(it) }
     }
 }

@@ -5,17 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.movieloom.app.data.repository.AppRepository
 import com.movieloom.app.data.repository.AppRepositoryImpl
 import com.movieloom.app.getClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 
 class HomeScreenViewModel : ViewModel() {
-    private val repository: AppRepository = AppRepositoryImpl(getClient().apply {
-
-    })
+    private val repository: AppRepository = AppRepositoryImpl(getClient())
 
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Loading)
     val uiState: StateFlow<HomeScreenState> = _uiState.asStateFlow()

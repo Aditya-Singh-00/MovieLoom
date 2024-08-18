@@ -26,5 +26,6 @@ data class Movie(
     @SerialName("medium_cover_image") val mediumCoverImage: String?,
     val rating: Double?,
     val title: String?,
-    val year: Int?
+    val year: Int?,
+    val synopsis: String?,
 )

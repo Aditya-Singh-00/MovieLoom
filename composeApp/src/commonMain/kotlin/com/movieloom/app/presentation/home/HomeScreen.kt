@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.movieloom.app.data.Routes
 import com.movieloom.app.data.models.Movie
+import com.movieloom.app.data.models.MoviesWithGenre
+import com.movieloom.app.presentation.common.HorizontalMovieSection
 import com.movieloom.app.presentation.common.MovieCard
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -64,12 +66,12 @@ fun HomeScreenError(
 
 @Composable
 fun HomeScreenSuccess(
-    movies: List<Movie>,
+    items: List<MoviesWithGenre>,
     modifier: Modifier = Modifier
 ) {
-    LazyRow(
+    LazyColumn(
         modifier = modifier.fillMaxSize()
     ) {
-        items(movies) { MovieCard(it) }
+        items(items) { HorizontalMovieSection(it) }
     }
 }

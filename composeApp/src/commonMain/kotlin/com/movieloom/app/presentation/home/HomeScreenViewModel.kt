@@ -2,6 +2,7 @@ package com.movieloom.app.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.movieloom.app.data.models.MoviesWithGenre
 import com.movieloom.app.data.repository.AppRepository
 import com.movieloom.app.data.repository.AppRepositoryImpl
 import com.movieloom.app.getClient
@@ -23,11 +24,16 @@ class HomeScreenViewModel : ViewModel() {
     private fun getMovies() {
         _uiState.value = HomeScreenState.Loading
         viewModelScope.launch {
-            val movies = repository.getMovies()
-            if (movies.isEmpty()) {
+            val items = listOf(
+                MoviesWithGenre("Sci-Fi", repository.getMovies("sci-fi")),
+                MoviesWithGenre("Fantasy", repository.getMovies("fantasy")),
+                MoviesWithGenre("Animation", repository.getMovies("animation")),
+                MoviesWithGenre("Horror", repository.getMovies("horror"))
+            )
+            if (items.isEmpty()) {
                 _uiState.value = HomeScreenState.Error("Nothing to show")
             } else {
-                _uiState.value = HomeScreenState.Success(movies)
+                _uiState.value = HomeScreenState.Success(items)
             }
         }
     }

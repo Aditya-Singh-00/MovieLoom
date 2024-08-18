@@ -1,5 +1,6 @@
 package com.movieloom.app.presentation.common
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,7 +50,8 @@ fun MovieCard(
                 resource = { asyncPainterResource(Routes.BASE_URL + movie.largeCoverImage) },
                 contentDescription = movie.title,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                animationSpec = tween()
             )
             Box(
                 modifier = Modifier

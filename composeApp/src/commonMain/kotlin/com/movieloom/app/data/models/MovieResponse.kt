@@ -29,3 +29,8 @@ data class Movie(
     val year: Int?,
     val synopsis: String?,
 )
+
+data class MoviesWithGenre(
+    val genre: String,
+    val movies: List<Movie>,
+)

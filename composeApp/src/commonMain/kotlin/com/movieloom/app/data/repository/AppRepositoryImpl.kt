@@ -11,14 +11,16 @@ import io.ktor.client.request.parameter
 class AppRepositoryImpl(
     private val httpClient: HttpClient
 ) : AppRepository {
-    override suspend fun getMovies(): List<Movie> {
+    override suspend fun getMovies(
+        genre: String,
+    ): List<Movie> {
         return try {
             httpClient.get(Routes.MOVIES) {
                 parameter("page", 1)
-                parameter("limit", 2)
+                parameter("limit", 10)
                 parameter("sort_by","year")
                 parameter("order_by","desc")
-                parameter("genre", "sci-fi")
+                parameter("genre", genre)
             }.body<MovieResponse>().data?.movies?.mapNotNull { it } ?: arrayListOf()
         } catch (e: Exception) {
             return arrayListOf()

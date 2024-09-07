@@ -1,5 +1,6 @@
 package com.movieloom.app.data.models
 
+import androidx.compose.runtime.Stable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,6 +18,7 @@ data class Data(
     @SerialName("page_number") val pageNumber: Int?
 )
 
+@Stable
 @Serializable
 data class Movie(
     @SerialName("background_image_original") val backgroundImageOriginal: String?,
@@ -30,7 +32,8 @@ data class Movie(
     val synopsis: String?,
 )
 
+@Stable
 data class MoviesWithGenre(
     val genre: String,
-    val movies: List<Movie>,
+    val movies: ArrayList<Movie>,
 )

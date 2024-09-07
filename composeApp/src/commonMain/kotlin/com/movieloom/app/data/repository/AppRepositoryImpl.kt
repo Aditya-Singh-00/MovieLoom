@@ -13,15 +13,17 @@ class AppRepositoryImpl(
 ) : AppRepository {
     override suspend fun getMovies(
         genre: String,
-    ): List<Movie> {
+    ): ArrayList<Movie> {
         return try {
-            httpClient.get(Routes.MOVIES) {
-                parameter("page", 1)
-                parameter("limit", 10)
-                parameter("sort_by","year")
-                parameter("order_by","desc")
-                parameter("genre", genre)
-            }.body<MovieResponse>().data?.movies?.mapNotNull { it } ?: arrayListOf()
+            ArrayList(
+                httpClient.get(Routes.MOVIES) {
+                    parameter("page", 1)
+                    parameter("limit", 10)
+                    parameter("sort_by","year")
+                    parameter("order_by","desc")
+                    parameter("genre", genre)
+                }.body<MovieResponse>().data?.movies?.mapNotNull { it } ?: arrayListOf()
+            )
         } catch (e: Exception) {
             return arrayListOf()
         }

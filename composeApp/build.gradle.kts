@@ -75,6 +75,8 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.media.kamel.default)
+            implementation(libs.kmpalette.core)
+            implementation(libs.kmpalette.extensions.network)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

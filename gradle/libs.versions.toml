@@ -17,6 +17,7 @@ kotlin = "2.0.0"
 kotlinx-coroutines = "1.8.1"
 ktor = "3.0.0-beta-2"
 kamel = "1.0.0-beta.7"
+kmpalette = "3.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,6 +48,8 @@ ktor-client-apache5 = { module = "io.ktor:ktor-client-apache5", version.ref = "k
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 media-kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 media-kamel-default = { module = "media.kamel:kamel-image-default", version.ref = "kamel" }
+kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette"}
+kmpalette-extensions-network = { module = "com.kmpalette:extensions-network", version.ref = "kmpalette" }
 
 #ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 #ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }

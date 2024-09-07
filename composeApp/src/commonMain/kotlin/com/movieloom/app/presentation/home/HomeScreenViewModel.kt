@@ -6,6 +6,7 @@ import com.movieloom.app.data.models.MoviesWithGenre
 import com.movieloom.app.data.repository.AppRepository
 import com.movieloom.app.data.repository.AppRepositoryImpl
 import com.movieloom.app.getClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,9 +20,14 @@ class HomeScreenViewModel : ViewModel() {
 
     private val genres = listOf("Sci-Fi", "Fantasy", "Animation", "Horror")
 
-    fun getMovies() {
+    fun getHomeScreenData() {
+        getMovies()
+        getTopSection()
+    }
+
+    private fun getMovies() {
         _uiState.value = HomeScreenState.Loading
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             genres.forEach { genre ->
                 val job = launch {
                     val moviesWithGenre = MoviesWithGenre(genre, repository.getMovies(genre.lowercase()))
@@ -29,11 +35,17 @@ class HomeScreenViewModel : ViewModel() {
                         when (uiState.value) {
                             is HomeScreenState.Loading,
                             is HomeScreenState.Error-> {
-                                _uiState.value = HomeScreenState.Success(listOf(moviesWithGenre))
+                                _uiState.value = HomeScreenState.Success(
+                                    topMovies = arrayListOf(),
+                                    movies = arrayListOf(moviesWithGenre)
+                                )
                             }
                             is HomeScreenState.Success -> {
+                                val successState = (uiState.value as HomeScreenState.Success)
+                                successState.movies.add(moviesWithGenre)
                                 _uiState.value = HomeScreenState.Success(
-                                    (uiState.value as HomeScreenState.Success).movies + moviesWithGenre
+                                    topMovies = successState.topMovies,
+                                    movies = successState.movies
                                 )
                             }
                         }
@@ -46,6 +58,28 @@ class HomeScreenViewModel : ViewModel() {
                         }
                         else -> { Unit }
                     }
+                }
+            }
+        }
+    }
+
+    private fun getTopSection() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val movies = repository.getMovies("mystery")
+            when (uiState.value) {
+                is HomeScreenState.Error,
+                HomeScreenState.Loading -> {
+                    _uiState.value = HomeScreenState.Success(
+                        topMovies = movies,
+                        movies = arrayListOf()
+                    )
+                }
+                is HomeScreenState.Success -> {
+                    val successState = (uiState.value as HomeScreenState.Success)
+                    _uiState.value = HomeScreenState.Success(
+                        topMovies = movies,
+                        movies = successState.movies
+                    )
                 }
             }
         }

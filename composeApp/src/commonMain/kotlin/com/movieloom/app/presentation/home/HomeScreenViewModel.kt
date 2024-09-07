@@ -17,23 +17,36 @@ class HomeScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<HomeScreenState>(HomeScreenState.Loading)
     val uiState: StateFlow<HomeScreenState> = _uiState.asStateFlow()
 
-    init {
-        getMovies()
-    }
+    private val genres = listOf("Sci-Fi", "Fantasy", "Animation", "Horror")
 
-    private fun getMovies() {
+    fun getMovies() {
         _uiState.value = HomeScreenState.Loading
         viewModelScope.launch {
-            val items = listOf(
-                MoviesWithGenre("Sci-Fi", repository.getMovies("sci-fi")),
-                MoviesWithGenre("Fantasy", repository.getMovies("fantasy")),
-                MoviesWithGenre("Animation", repository.getMovies("animation")),
-                MoviesWithGenre("Horror", repository.getMovies("horror"))
-            )
-            if (items.isEmpty()) {
-                _uiState.value = HomeScreenState.Error("Nothing to show")
-            } else {
-                _uiState.value = HomeScreenState.Success(items)
+            genres.forEach { genre ->
+                val job = launch {
+                    val moviesWithGenre = MoviesWithGenre(genre, repository.getMovies(genre.lowercase()))
+                    if (moviesWithGenre.movies.isNotEmpty()) {
+                        when (uiState.value) {
+                            is HomeScreenState.Loading,
+                            is HomeScreenState.Error-> {
+                                _uiState.value = HomeScreenState.Success(listOf(moviesWithGenre))
+                            }
+                            is HomeScreenState.Success -> {
+                                _uiState.value = HomeScreenState.Success(
+                                    (uiState.value as HomeScreenState.Success).movies + moviesWithGenre
+                                )
+                            }
+                        }
+                    }
+                }
+                job.invokeOnCompletion {
+                    when (uiState.value) {
+                        HomeScreenState.Loading -> {
+                            _uiState.value = HomeScreenState.Error("Nothing to show")
+                        }
+                        else -> { Unit }
+                    }
+                }
             }
         }
     }

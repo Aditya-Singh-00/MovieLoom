@@ -4,7 +4,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kmpalette.loader.rememberNetworkLoader
 import com.kmpalette.rememberDominantColorState
@@ -86,7 +89,7 @@ fun HomeScreenSuccess(
         rememberDominantColorState(loader = networkLoader[it])
     }
 
-    val bgColor = animateColorAsState(dominantColorState[currentPosition.value].color, tween(2000))
+    val bgColor = animateColorAsState(dominantColorState[currentPosition.value].color, tween(1000))
 
     LaunchedEffect(topMovies.isNotEmpty()) {
         lazyListState.animateScrollToItem(0)
@@ -107,9 +110,6 @@ fun HomeScreenSuccess(
                             bgColor.value.copy(alpha = 0.8f),
                             bgColor.value.copy(alpha = 0.7f),
                             bgColor.value.copy(alpha = 0.6f),
-                            bgColor.value.copy(alpha = 0.5f),
-                            bgColor.value.copy(alpha = 0.4f),
-                            bgColor.value.copy(alpha = 0.3f),
                         )
                     )
                 )
@@ -123,5 +123,6 @@ fun HomeScreenSuccess(
             )
         }
         items(items) { HorizontalMovieSection(it) }
+        item { Spacer(modifier = Modifier.height(24.dp)) }
     }
 }

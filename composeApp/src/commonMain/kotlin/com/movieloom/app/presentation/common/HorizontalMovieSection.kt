@@ -40,7 +40,8 @@ fun HorizontalMovieSection(
         ) {
             Text(
                 text = moviesWithGenre.genre,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
             )
             Text(
                 text = StaticText.SEE_ALL,
